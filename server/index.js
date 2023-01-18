@@ -21,9 +21,6 @@ mongoose
   .then(() => console.log("connected successfully"))
   .catch((err) => console.log("its an error", err));
 
-app.get("/", (req, res) => {
-  res.send("Hello World! this is working fine");
-});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -57,6 +54,14 @@ app.post("/", upload.single("testImage"), (req, res) => {
 });
 
 
+
+
+
+app.get('/',  async (req, res) =>{
+  const allData = await imageModel.find();
+  
+  res.json(allData)
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
