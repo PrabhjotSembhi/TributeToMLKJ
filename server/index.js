@@ -1,14 +1,25 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const multer = require("multer");
-const fs = require("fs");
 const imageModel = require("./model");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = 5000;
 
+
+cloudinary.config({ 
+  cloud_name: 'dnvblgp76', 
+  api_key: '551833517997557', 
+  api_secret: 'nEBMz_FqbDMGWI8VhkeY16CM0Ts',
+  secure: true
+});
+
+app.use(fileUpload({
+  useTempFiles: true
+}))
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,45 +33,19 @@ mongoose
   .catch((err) => console.log("its an error", err));
 
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+app.post("/", async (req,res) => {
 
-const upload = multer({ storage: storage });
-
-app.post("/", upload.single("testImage"), (req, res) => {
-  console.log(req)
-  const saveImage = new imageModel({
-    name: req.body.name,
-    img: {
-      data: fs.readFileSync("uploads/" + req.file.filename),
-      contentType: "image/png",
-    },
-  });
-  saveImage
-  .save()
-  .then((res) => {
-    console.log("image is saved");
+  const file = req.files.photo;
+   await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    console.log(result)
   })
-  .catch((err) => {
-    console.log(err, "error has occur");
-  });
-  res.send('image is saved')
-});
 
-
-
+  await res.send('done')
+})
 
 
 app.get('/',  async (req, res) =>{
-  const allData = await imageModel.find();
-  
-  res.json(allData)
+ res.send("this is working")
 })
 
 app.listen(port, () => {
