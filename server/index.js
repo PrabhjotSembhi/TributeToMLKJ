@@ -36,11 +36,28 @@ mongoose
 app.post("/", async (req,res) => {
 
   const file = req.files.photo;
-   await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     console.log(result)
+
+    const imageModelTest =  imageModel({
+      name:req.body.name,
+      imgUrl: result.url
+
+
+    });
+
+
+    imageModelTest.save()
+    .then((res) => {
+      console.log('image is saved')
+    })
+    .catch((err) => {
+      console.log(err, 'we have an error')
+    })
+
   })
 
-  await res.send('done')
+   res.send('done image doen')
 })
 
 

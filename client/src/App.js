@@ -1,28 +1,18 @@
 import "./App.css";
-import axios from "axios";
+import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Protected from "./Protected";
+import Home from "./Home";
+
+
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000")
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err, "bai error aaa"));
-  }, []);
-
   return (
-    <div className="App">
-      <h1>this my app working fine</h1>
-      {data.map((singledata) => {
-        const base64String = btoa(
-          String.fromCharCode(...new Uint8Array(singledata.img.data.data))
-        );
-       return <img alt="img" src={`data:image/png;base64,${base64String}`}/>
-      })}
-    </div>
-  );
+    <Routes>
+      <Route path='/' element={<Protected component={<Home/>}/>} />
+
+    </Routes>
+  )
 }
 
 export default App;
