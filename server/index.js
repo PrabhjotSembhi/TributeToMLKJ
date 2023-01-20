@@ -61,8 +61,16 @@ app.post("/", async (req,res) => {
 })
 
 
+
 app.get('/',  async (req, res) =>{
- res.send("this is working")
+  imageModel.find({}, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(result);
+    }
+  });
+ 
 })
 
 app.listen(port, () => {
