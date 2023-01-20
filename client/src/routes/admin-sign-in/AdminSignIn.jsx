@@ -1,5 +1,7 @@
 import React from 'react'
-import { useState, red } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const AdminSignIn = () => {
@@ -14,14 +16,23 @@ const AdminSignIn = () => {
     const { value, name } = e.target;
     setFormFeilds({ ...formFeilds, [name]: value });
   }
+  const navigate = useNavigate();
 
   
   const handleSubmit = (e) => {
+
     const {username, password} = formFeilds;
     e.preventDefault();
 
+
     if (AdminUsername === username && AdminPassword === password) {
-      console.log('sigin ho gya')
+      
+
+      console.log('sigin ho gya');
+
+
+      navigate('/submissions')
+
     }
     else{
       console.log('sigin nhi hoya')
