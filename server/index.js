@@ -25,6 +25,7 @@ app.use(
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.json())
 
 mongoose
   .connect(
@@ -58,7 +59,12 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/save", async (req, res) => {
-  const artworkModel = approvedArtworks({
+  console.log('got a request');
+
+  console.log(req.body);
+
+
+ const artworkModel = approvedArtworks({
     artwork: req.body,
   });
 
@@ -71,7 +77,6 @@ app.post("/save", async (req, res) => {
       console.log(err, "we have an error");
     });
 
-  console.log(req);
   res.send("save artworks");
 });
 
