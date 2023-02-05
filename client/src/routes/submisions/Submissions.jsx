@@ -4,37 +4,48 @@ import "./submissions.css";
 
 const Submissions = () => {
   const [submissions, setSubmissions] = useState([]);
+  const [isApproved, setIsApprove] = useState();
 
   useEffect(() => {
     fetch("http://localhost:5000/")
       .then((response) => response.json())
-      .then((data) => setSubmissions(data))
+
+      .then((data) => setSubmissions(data));
   }, []);
 
-
-
-
+  console.log(submissions);
 
   const handleApprove = (postdata) => {
+    setIsApprove(true)
     const postOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type' : 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(postdata)
-    }
+      body: JSON.stringify(postdata),
+    };
 
-    fetch('http://localhost:5000/save', postOptions)
-  }
+    fetch("http://localhost:5000/save", postOptions);
+  };
 
   return (
     <div className="submisgrid">
       {submissions.map((submission) => {
         return (
           <div className="flexy" key={submission._id}>
-            <h1>{submission.name}</h1>
+            {}
+            <h1 style={{ color: "red" }}>{submission.name}</h1>
             <img src={submission.imgUrl} alt="" />
-            <button onClick={() => {handleApprove(submission)}}>approve</button>
+            <button
+            style={{ display: isApproved ? "none" : "" }}
+             
+              onClick={() => {
+                
+                handleApprove(submission);
+              }}
+            >
+              approve
+            </button>
           </div>
         );
       })}

@@ -12,3 +12,7 @@
 img{
     width: 100%;
 }
+
+.HideSubmission{
+    display: none;
+}

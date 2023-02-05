@@ -8,7 +8,7 @@ const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
-const port = 5000;
+const port =  5000;
 
 cloudinary.config({
   cloud_name: "dnvblgp76",
@@ -68,6 +68,7 @@ app.post("/save", async (req, res) => {
     artwork: req.body,
   });
 
+
   artworkModel
     .save()
     .then((res) => {
@@ -85,11 +86,23 @@ app.get("/", async (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(result)
       res.json(result);
     }
   });
 });
 
-app.listen(port, () => {
+app.get("/artworks", async (req, res) => {
+  approvedArtworks.find({}, function(err,result){
+    if (err) {
+      console.log(err)
+    }else{
+      res.json('result')
+    }
+  })
+})
+
+
+app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);
 });
