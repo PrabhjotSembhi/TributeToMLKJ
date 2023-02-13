@@ -35,26 +35,41 @@ mongoose
   .then(() => console.log("connected successfully"))
   .catch((err) => console.log("its an error", err));
 
-app.post("/", async (req, res) => {
-  const file = req.files.photo;
-  cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
-    console.log(result);
 
-    const imageModelTest = imageModel({
+
+
+app.post('/test', async (req, res) => {
+
+  console.log(req.body);
+  res.send('yeh')
+
+})
+
+
+
+
+
+
+app.post("/", async (req, res) => {
+  console.log(req.body);
+
+ /* cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+    console.log(err, 'clou errro')
+
+    /*const imageModelTest = imageModel({
       name: req.body.name,
       imgUrl: result.url,
     });
 
-    imageModelTest
+   /* **imageModelTest
       .save()
       .then((res) => {
         console.log("image is saved");
       })
       .catch((err) => {
         console.log(err, "we have an error");
-      });
-  });
-
+      });*
+  });*/
   res.send("done image doen");
 });
 
@@ -81,16 +96,7 @@ app.post("/save", async (req, res) => {
   res.send("save artworks");
 });
 
-app.get("/", async (req, res) => {
-  imageModel.find({}, function (err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(result)
-      res.json(result);
-    }
-  });
-});
+
 
 app.get("/artworks", async (req, res) => {
   approvedArtworks.find({}, function(err,result){

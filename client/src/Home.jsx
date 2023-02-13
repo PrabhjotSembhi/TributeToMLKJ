@@ -1,23 +1,19 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-
-
+import ArtworkForm from './components/ArtworkForm';
+import SubmissionForm from './components/SubmissionForm';
+import Form from './components/Form';
 
 
 const Home = () => {
   const [submissions, setSubmissions] = useState([]);
 
 
-useEffect(() => {
-  fetch("http://localhost:5000/artworks")
-    .then((response) => response.json())
 
-    .then((data) => setSubmissions(data))
-}, []);
-
-console.log(submissions)
   return (
-    <div>{'hey'}</div>
+    <div>
+      <Form/>
+    </div>
   )
 }
 

@@ -19,9 +19,7 @@ const Submissions = () => {
     setIsApprove(true)
     const postOptions = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+
       body: JSON.stringify(postdata),
     };
 
